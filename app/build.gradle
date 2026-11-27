@@ -51,7 +51,8 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
+            // MD SMS: real key when CI secrets exist, otherwise a test (debug) signature
+            signingConfig System.getenv("SIGNING_KEY_ALIAS") ? signingConfigs.release : signingConfigs.debug
             manifestPlaceholders = [networkSecurityConfig: "@xml/network_security_config"]
         }
     }
