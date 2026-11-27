@@ -407,10 +407,8 @@ class HomeFragment : Fragment() {
         val permissionsRequired =
             listOf(
                 Manifest.permission.READ_PHONE_STATE,
-                Manifest.permission.READ_SMS,
-                Manifest.permission.RECEIVE_SMS,
+                // MD SMS: send-only — no READ_SMS / RECEIVE_SMS / RECEIVE_MMS (Play Protect blocks sideloaded apps that request them)
                 Manifest.permission.SEND_SMS,
-                Manifest.permission.RECEIVE_MMS,
                 Manifest.permission.READ_PHONE_NUMBERS.takeIf { Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU },
             )
                 .filterNotNull()

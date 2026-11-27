@@ -32,7 +32,7 @@ jobs:
           {
             "project_info": { "project_number": "000000000000", "project_id": "md-sms-placeholder", "storage_bucket": "md-sms-placeholder.appspot.com" },
             "client": [{
-              "client_info": { "mobilesdk_app_id": "1:000000000000:android:0000000000000000", "android_client_info": { "package_name": "me.capcom.smsgateway" } },
+              "client_info": { "mobilesdk_app_id": "1:000000000000:android:0000000000000000", "android_client_info": { "package_name": "com.mdstore.sms" } },
               "oauth_client": [],
               "api_key": [{ "current_key": "AIzaSyPlaceholderPlaceholderPlaceholde" }],
               "services": { "appinvite_service": { "other_platform_oauth_client": [] } }
