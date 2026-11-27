@@ -27,6 +27,7 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
 import me.capcom.smsgateway.R
 import me.capcom.smsgateway.databinding.FragmentHomeBinding
+import me.capcom.smsgateway.helpers.LocaleHelper
 import me.capcom.smsgateway.helpers.SettingsHelper
 import me.capcom.smsgateway.helpers.SubscriptionsHelper
 import me.capcom.smsgateway.modules.connection.ConnectionService
@@ -131,6 +132,8 @@ class HomeFragment : Fragment() {
 
         binding.buttonUnlink.setOnClickListener { confirmUnlink() }
 
+        setupLanguageButtons()
+
         viewLifecycleOwner.lifecycleScope.launch {
             events.collect<DeviceRegisteredEvent.Success> { renderStatus() }
         }
@@ -222,6 +225,25 @@ class HomeFragment : Fragment() {
         binding.textStatus.text = getString(text)
         binding.textStatus.backgroundTintList =
             ColorStateList.valueOf(ContextCompat.getColor(requireContext(), color))
+    }
+
+    /** AR / FR / EN buttons: save the choice and redraw the screen in that language. */
+    private fun setupLanguageButtons() {
+        val buttons = mapOf(
+            "ar" to binding.buttonLangAr.id,
+            "fr" to binding.buttonLangFr.id,
+            "en" to binding.buttonLangEn.id,
+        )
+        val current = androidx.core.os.ConfigurationCompat.getLocales(resources.configuration)[0]?.language // API 21+ safe
+        binding.groupLanguage.check(buttons[current] ?: binding.buttonLangEn.id)
+
+        binding.groupLanguage.addOnButtonCheckedListener { _, checkedId, isChecked ->
+            if (!isChecked) return@addOnButtonCheckedListener
+            val lang = buttons.entries.first { it.value == checkedId }.key
+            if (lang == current) return@addOnButtonCheckedListener
+            LocaleHelper.setLocale(requireContext(), lang)
+            requireActivity().recreate()
+        }
     }
 
     private fun confirmUnlink() {
