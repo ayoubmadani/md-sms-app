@@ -32,4 +32,7 @@
     <string name="mdsms_sim_auto">Par défaut du téléphone</string>
     <string name="mdsms_sim_item">SIM %1$d — %2$s</string>
     <string name="mdsms_sim_need_permission">Démarrez le service pour voir vos cartes SIM</string>
+    <string name="mdsms_unlink">Dissocier</string>
+    <string name="mdsms_unlink_confirm">Ce téléphone n\'enverra plus de SMS pour votre boutique. Vous pourrez l\'associer à nouveau avec un nouveau code.</string>
+    <string name="mdsms_unlinked">Téléphone dissocié</string>
 </resources>

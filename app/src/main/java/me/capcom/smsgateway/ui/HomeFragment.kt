@@ -129,6 +129,8 @@ class HomeFragment : Fragment() {
             actionStart(!isRunning)
         }
 
+        binding.buttonUnlink.setOnClickListener { confirmUnlink() }
+
         viewLifecycleOwner.lifecycleScope.launch {
             events.collect<DeviceRegisteredEvent.Success> { renderStatus() }
         }
@@ -220,6 +222,27 @@ class HomeFragment : Fragment() {
         binding.textStatus.text = getString(text)
         binding.textStatus.backgroundTintList =
             ColorStateList.valueOf(ContextCompat.getColor(requireContext(), color))
+    }
+
+    private fun confirmUnlink() {
+        androidx.appcompat.app.AlertDialog.Builder(requireContext())
+            .setTitle(R.string.mdsms_unlink)
+            .setMessage(R.string.mdsms_unlink_confirm)
+            .setPositiveButton(R.string.mdsms_unlink) { _, _ -> unlink() }
+            .setNegativeButton(R.string.cancel, null)
+            .show()
+    }
+
+    /**
+     * Local unlink: stop sending and forget this phone's credentials. The server keeps the
+     * old device record (no server-side detach); linking again creates a new device.
+     */
+    private fun unlink() {
+        orchestratorSvc.stop(requireContext())
+        gatewaySettings.registrationInfo = null
+        gatewaySettings.fcmToken = null
+        renderStatus()
+        Toast.makeText(requireContext(), R.string.mdsms_unlinked, Toast.LENGTH_SHORT).show()
     }
 
     private fun actionStart(start: Boolean) {

@@ -240,4 +240,7 @@
     <string name="mdsms_sim_auto">Phone default</string>
     <string name="mdsms_sim_item">SIM %1$d — %2$s</string>
     <string name="mdsms_sim_need_permission">Start the service to see your SIM cards</string>
+    <string name="mdsms_unlink">Unlink</string>
+    <string name="mdsms_unlink_confirm">This phone will stop sending SMS for your store. You can link it again with a new code.</string>
+    <string name="mdsms_unlinked">Phone unlinked</string>
 </resources>

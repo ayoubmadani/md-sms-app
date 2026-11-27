@@ -218,4 +218,7 @@
     <string name="mdsms_sim_auto">افتراضي الهاتف</string>
     <string name="mdsms_sim_item">الشريحة %1$d — %2$s</string>
     <string name="mdsms_sim_need_permission">شغّل الخدمة لعرض الشرائح</string>
+    <string name="mdsms_unlink">فك الربط</string>
+    <string name="mdsms_unlink_confirm">سيتوقف هذا الهاتف عن إرسال رسائل متجرك. يمكنك ربطه من جديد برمز جديد.</string>
+    <string name="mdsms_unlinked">تم فك الربط</string>
 </resources>
