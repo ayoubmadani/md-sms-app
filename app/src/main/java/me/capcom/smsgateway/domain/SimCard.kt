@@ -1,4 +1,4 @@
-package me.capcom.smsgateway.modules.localserver.domain
+package me.capcom.smsgateway.domain
 
 /**
  * Represents a SIM card in the device.

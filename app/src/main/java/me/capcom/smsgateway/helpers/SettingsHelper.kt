@@ -11,12 +11,8 @@ import java.util.Locale
 class SettingsHelper(private val context: Context) {
     private val settings = PreferenceManager.getDefaultSharedPreferences(context)
 
-    init {
-        migrate()
-    }
-
     var autostart: Boolean
-        get() = settings.getBoolean(PREF_KEY_AUTOSTART, false)
+        get() = settings.getBoolean(PREF_KEY_AUTOSTART, true) // MD SMS: start on boot by default
         set(value) {
             // enable broadcast receiver
             context.packageManager.setComponentEnabledSetting(
@@ -38,17 +34,6 @@ class SettingsHelper(private val context: Context) {
         set(value) = settings.edit(true) {
             putString(APP_LANGUAGE, value)
         }
-
-    private fun migrate() {
-        // remove after 2025-11-28
-        val PREF_KEY_SERVER_TOKEN = "server_token"
-        if (settings.contains(PREF_KEY_SERVER_TOKEN)) {
-            settings.edit(true) {
-                putString("localserver.PASSWORD", settings.getString(PREF_KEY_SERVER_TOKEN, null))
-                remove(PREF_KEY_SERVER_TOKEN)
-            }
-        }
-    }
 
     companion object {
         private const val PREF_KEY_AUTOSTART = "autostart"

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- MD SMS home: one status card + start/stop. -->
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -6,20 +7,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".ui.HomeFragment">
-
-    <TextView
-        android:id="@+id/textConnectionStatus"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="4dp"
-        android:background="@drawable/rounded_background"
-        android:backgroundTint="@color/connection_status_background"
-        android:enabled="true"
-        android:gravity="center"
-        android:padding="8dp"
-        android:textColor="@android:color/white"
-        android:visibility="gone"
-        tools:text="@string/internet_connection_available" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -29,215 +16,87 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="16dp">
 
-            <com.google.android.material.card.MaterialCardView
+            <ImageView
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:layout_marginTop="8dp"
+                android:contentDescription="@string/app_name"
+                android:src="@mipmap/ic_launcher" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/app_name"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/mdsms_tagline"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
+            <TextView
+                android:id="@+id/textStatus"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                app:cardCornerRadius="16dp"
-                app:contentPadding="8dp">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:id="@+id/imageLocalServer"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_margin="4dp"
-                        android:src="@drawable/ic_local_server"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/headerLocalServer"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:ellipsize="end"
-                        android:lines="1"
-                        android:text="@string/settings_local_server"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-                        app:layout_constraintBottom_toBottomOf="@id/imageLocalServer"
-                        app:layout_constraintEnd_toStartOf="@+id/switchUseLocalServer"
-                        app:layout_constraintStart_toEndOf="@id/imageLocalServer"
-                        app:layout_constraintTop_toTopOf="@id/imageLocalServer" />
-
-                    <androidx.appcompat.widget.SwitchCompat
-                        android:id="@+id/switchUseLocalServer"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
-                        app:layout_constraintBottom_toBottomOf="@id/imageLocalServer"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@id/imageLocalServer" />
-
-                    <GridLayout
-                        android:id="@+id/layoutLocalServer"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="4dp"
-                        android:columnCount="2"
-                        android:visibility="gone"
-                        app:layout_constraintEnd_toEndOf="@+id/switchUseLocalServer"
-                        app:layout_constraintStart_toEndOf="@id/imageLocalServer"
-                        app:layout_constraintTop_toBottomOf="@id/headerLocalServer"
-                        tools:visibility="visible">
-
-                        <TextView
-                            style="@style/HomeCardLabel"
-                            android:text="@string/local_address" />
-
-                        <TextView
-                            android:id="@+id/textLocalIP"
-                            style="@style/HomeCardValue"
-                            android:text="@string/dots"
-                            tools:text="127.0.0.1:8080" />
-
-                        <TextView
-                            style="@style/HomeCardLabel"
-                            android:text="@string/public_address" />
-
-                        <TextView
-                            android:id="@+id/textPublicIP"
-                            style="@style/HomeCardValue"
-                            android:text="@string/dots"
-                            tools:text="127.0.0.1:8080" />
-
-                        <TextView
-                            style="@style/HomeCardLabel"
-                            android:text="@string/username" />
-
-                        <TextView
-                            android:id="@+id/textLocalUsername"
-                            style="@style/HomeCardValue"
-                            tools:text="sms" />
-
-                        <TextView
-                            style="@style/HomeCardLabel"
-                            android:text="@string/password" />
-
-                        <TextView
-                            android:id="@+id/textLocalPassword"
-                            style="@style/HomeCardValue"
-                            tools:text="1q2w3e4r" />
-
-                        <TextView
-                            style="@style/HomeCardLabel"
-                            android:text="@string/device_id" />
-
-                        <TextView
-                            android:id="@+id/textLocalDeviceId"
-                            style="@style/HomeCardValue"
-                            tools:text="device-123" />
-                    </GridLayout>
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-            </com.google.android.material.card.MaterialCardView>
+                android:layout_marginTop="24dp"
+                android:background="@drawable/rounded_background"
+                android:backgroundTint="@color/grey_700"
+                android:gravity="center"
+                android:padding="12dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@android:color/white"
+                tools:text="@string/mdsms_status_connected" />
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardAccount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="4dp"
+                android:layout_marginTop="16dp"
+                android:visibility="gone"
                 app:cardCornerRadius="16dp"
-                app:contentPadding="8dp">
+                app:contentPadding="12dp"
+                tools:visibility="visible">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <GridLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:id="@+id/imageRemoteServer"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_margin="4dp"
-                        android:src="@drawable/ic_cloud_server"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                    android:layout_height="wrap_content"
+                    android:columnCount="2">
 
                     <TextView
-                        android:id="@+id/headerRemoteServer"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
-                        android:ellipsize="end"
-                        android:lines="1"
-                        android:text="@string/cloud_server"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-                        app:layout_constraintBottom_toBottomOf="@id/imageRemoteServer"
-                        app:layout_constraintEnd_toStartOf="@+id/switchUseRemoteServer"
-                        app:layout_constraintStart_toEndOf="@id/imageRemoteServer"
-                        app:layout_constraintTop_toTopOf="@id/imageRemoteServer" />
+                        style="@style/HomeCardLabel"
+                        android:text="@string/mdsms_account" />
 
-                    <androidx.appcompat.widget.SwitchCompat
-                        android:id="@+id/switchUseRemoteServer"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
-                        app:layout_constraintBottom_toBottomOf="@id/imageRemoteServer"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@id/imageRemoteServer" />
+                    <TextView
+                        android:id="@+id/textAccount"
+                        style="@style/HomeCardValue"
+                        tools:text="8T85PZ" />
 
-                    <GridLayout
-                        android:id="@+id/layoutRemoteServer"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="4dp"
-                        android:columnCount="2"
-                        android:visibility="gone"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/imageRemoteServer"
-                        app:layout_constraintTop_toBottomOf="@id/headerRemoteServer"
-                        tools:visibility="visible">
+                    <TextView
+                        style="@style/HomeCardLabel"
+                        android:text="@string/device_id" />
 
-
-                        <TextView
-                            style="@style/HomeCardLabel"
-                            android:text="@string/server_address" />
-
-                        <TextView
-                            android:id="@+id/textRemoteAddress"
-                            style="@style/HomeCardValue"
-                            android:autoLink="web"
-                            android:text="@string/dots"
-                            tools:text="@string/settings_address_is_sms_capcom_me" />
-
-                        <TextView
-                            style="@style/HomeCardLabel"
-                            android:text="@string/username" />
-
-                        <TextView
-                            android:id="@+id/textRemoteUsername"
-                            style="@style/HomeCardValue"
-                            tools:text="1Q2W3E" />
-
-                        <TextView
-                            style="@style/HomeCardLabel"
-                            android:text="@string/password" />
-
-                        <TextView
-                            android:id="@+id/textRemotePassword"
-                            style="@style/HomeCardValue"
-                            tools:text="1q2w3e4r" />
-
-                        <TextView
-                            style="@style/HomeCardLabel"
-                            android:text="@string/device_id" />
-
-                        <TextView
-                            android:id="@+id/textRemoteDeviceId"
-                            style="@style/HomeCardValue"
-                            tools:text="device-456" />
-                    </GridLayout>
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
+                    <TextView
+                        android:id="@+id/textDeviceId"
+                        style="@style/HomeCardValue"
+                        tools:text="abc123" />
+                </GridLayout>
             </com.google.android.material.card.MaterialCardView>
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:text="@string/mdsms_keep_on"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small" />
         </LinearLayout>
-
     </ScrollView>
 
     <androidx.appcompat.widget.SwitchCompat
@@ -247,16 +106,13 @@
         android:layout_margin="8dp"
         android:text="@string/settings_start_on_boot" />
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="8dp" />
-
     <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonStart"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:backgroundTint="@color/grey_700"
+        android:paddingVertical="12dp"
         android:text="@string/button_start_service"
         app:cornerRadius="8dp" />
 </androidx.appcompat.widget.LinearLayoutCompat>

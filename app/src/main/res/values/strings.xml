@@ -221,4 +221,19 @@
     <string name="unregister_device">Unregister device</string>
     <string name="confirm_unregister_device">Are you sure you want to unregister this device?
         You will need to sign up or sign in again to use the cloud server.</string>
+    <!-- MD SMS -->
+    <string name="mdsms_tagline">Order confirmations sent from your SIM</string>
+    <string name="mdsms_link_title">Link this phone</string>
+    <string name="mdsms_link_hint">Enter the code shown in your MD Store dashboard (Settings → SMS).</string>
+    <string name="mdsms_code">Link code</string>
+    <string name="mdsms_link">Link</string>
+    <string name="mdsms_code_required">Enter the code</string>
+    <string name="mdsms_status_connected">Connected to MD Store</string>
+    <string name="mdsms_status_not_linked">Not linked yet</string>
+    <string name="mdsms_status_stopped">Stopped — orders will not get SMS</string>
+    <string name="mdsms_status_no_internet">No internet connection</string>
+    <string name="mdsms_account">Account</string>
+    <string name="mdsms_keep_on">Keep this phone on, charged and connected to the internet.</string>
+    <string name="mdsms_permissions_missing">SMS permission is required to send messages</string>
+    <string name="mdsms_link_failed">Linking failed: %1$s</string>
 </resources>

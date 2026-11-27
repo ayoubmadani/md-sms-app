@@ -12,16 +12,13 @@ import me.capcom.smsgateway.modules.gateway.events.DeviceRegisteredEvent
 import me.capcom.smsgateway.modules.gateway.events.MessageCancelledEvent
 import me.capcom.smsgateway.modules.gateway.events.MessageEnqueuedEvent
 import me.capcom.smsgateway.modules.gateway.events.SettingsUpdatedEvent
-import me.capcom.smsgateway.modules.gateway.events.WebhooksUpdatedEvent
 import me.capcom.smsgateway.modules.gateway.services.SSEForegroundService
 import me.capcom.smsgateway.modules.gateway.workers.PullMessagesWorker
 import me.capcom.smsgateway.modules.gateway.workers.RegistrationWorker
 import me.capcom.smsgateway.modules.gateway.workers.SendStateWorker
 import me.capcom.smsgateway.modules.gateway.workers.SettingsUpdateWorker
-import me.capcom.smsgateway.modules.gateway.workers.WebhooksUpdateWorker
 import me.capcom.smsgateway.modules.messages.MessagesService
 import me.capcom.smsgateway.modules.messages.events.MessageStateChangedEvent
-import me.capcom.smsgateway.modules.ping.events.PingEvent
 import org.koin.core.component.get
 
 class EventsReceiver : EventsReceiver() {
@@ -67,45 +64,6 @@ class EventsReceiver : EventsReceiver() {
                         // per-collector isolation: an exception here must not cancel
                         // the coroutineScope and kill sibling collectors
                         Log.e("EventsReceiver", "MessageStateChangedEvent collector failed", e)
-                    }
-                }
-            }
-
-            launch {
-                Log.d("EventsReceiver", "launched PingEvent")
-                eventBus.collect<PingEvent> {
-                    try {
-                        Log.d("EventsReceiver", "Event: $it")
-
-                        if (!settings.enabled) return@collect
-
-                        // T7: event bursts coalesce to <=1 pull per cooldown window
-                        PullMessagesWorker.startCoalesced(get())
-                    } catch (e: CancellationException) {
-                        throw e
-                    } catch (e: Exception) {
-                        // per-collector isolation: an exception here must not cancel
-                        // the coroutineScope and kill sibling collectors
-                        Log.e("EventsReceiver", "PingEvent collector failed", e)
-                    }
-                }
-            }
-
-            launch {
-                Log.d("EventsReceiver", "launched WebhooksUpdatedEvent")
-                eventBus.collect<WebhooksUpdatedEvent> {
-                    try {
-                        Log.d("EventsReceiver", "Event: $it")
-
-                        if (!settings.enabled) return@collect
-
-                        WebhooksUpdateWorker.start(get())
-                    } catch (e: CancellationException) {
-                        throw e
-                    } catch (e: Exception) {
-                        // per-collector isolation: an exception here must not cancel
-                        // the coroutineScope and kill sibling collectors
-                        Log.e("EventsReceiver", "WebhooksUpdatedEvent collector failed", e)
                     }
                 }
             }

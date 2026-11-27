@@ -199,4 +199,19 @@
     <string name="webhook_queue_label_payload">الحمولة</string>
     <string name="webhook_queue_payload_unavailable">الحمولة غير متاحة</string>
     <string name="webhook_queue_no_error">لا يوجد</string>
+    <!-- MD SMS -->
+    <string name="mdsms_tagline">رسائل تأكيد الطلبات تُرسل من شريحتك</string>
+    <string name="mdsms_link_title">اربط هذا الهاتف</string>
+    <string name="mdsms_link_hint">أدخل الرمز الظاهر في لوحة MD Store (الإعدادات ← رسائل SMS).</string>
+    <string name="mdsms_code">رمز الربط</string>
+    <string name="mdsms_link">ربط</string>
+    <string name="mdsms_code_required">أدخل الرمز</string>
+    <string name="mdsms_status_connected">متصل بـ MD Store</string>
+    <string name="mdsms_status_not_linked">الهاتف غير مربوط بعد</string>
+    <string name="mdsms_status_stopped">متوقف — لن تُرسل رسائل للطلبات</string>
+    <string name="mdsms_status_no_internet">لا يوجد اتصال بالإنترنت</string>
+    <string name="mdsms_account">الحساب</string>
+    <string name="mdsms_keep_on">أبقِ الهاتف مشغّلاً ومشحوناً ومتصلاً بالإنترنت.</string>
+    <string name="mdsms_permissions_missing">صلاحية الرسائل ضرورية لإرسال الرسائل</string>
+    <string name="mdsms_link_failed">فشل الربط: %1$s</string>
 </resources>

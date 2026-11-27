@@ -44,13 +44,8 @@ class HolderFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.buttonOutgoing.setOnClickListener {
-            selectOutgoing()
-        }
-
-        binding.buttonIncoming.setOnClickListener {
-            selectIncoming()
-        }
+        // MD SMS: send-only — there is no incoming tab, hide the switcher
+        (binding.buttonOutgoing.parent as View).visibility = View.GONE
 
         if (savedInstanceState == null) {
             selectOutgoing()
@@ -86,21 +81,6 @@ class HolderFragment : Fragment() {
         }
     }
 
-    private fun selectIncoming() {
-        isOutgoingSelected = false
-
-        updateButtonStates()
-        childFragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
-        val incoming = childFragmentManager.findFragmentByTag(TAG_INCOMING)
-            ?: IncomingMessagesListFragment.newInstance()
-        val outgoing = childFragmentManager.findFragmentByTag(TAG_OUTGOING)
-
-        childFragmentManager.commit {
-            if (!incoming.isAdded) add(R.id.rootLayout, incoming, TAG_INCOMING)
-            outgoing?.let { hide(it) }
-            show(incoming)
-        }
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()

@@ -14,7 +14,7 @@ class GatewaySettings(
     }
 
     var enabled: Boolean
-        get() = storage.get<Boolean>(ENABLED) ?: false
+        get() = true // MD SMS: the cloud (MD Store) server is the only mode
         set(value) = storage.set(ENABLED, value)
 
     val deviceId: String?
@@ -40,9 +40,9 @@ class GatewaySettings(
     }
 
     val serverUrl: String
-        get() = storage.get<String?>(CLOUD_URL) ?: PUBLIC_URL
+        get() = PUBLIC_URL // MD SMS: fixed server
     val privateToken: String?
-        get() = storage.get<String>(PRIVATE_TOKEN)
+        get() = null // MD SMS: phones join with a one-time code, no private token
 
     val notificationChannel: NotificationChannel
         get() = storage.get<NotificationChannel>(NOTIFICATION_CHANNEL) ?: NotificationChannel.AUTO
@@ -56,7 +56,7 @@ class GatewaySettings(
         private const val PRIVATE_TOKEN = "private_token"
         private const val NOTIFICATION_CHANNEL = "notification_channel"
 
-        const val PUBLIC_URL = "https://api.sms-gate.app/mobile/v1"
+        const val PUBLIC_URL = "https://sms.mdstore.top/api/mobile/v1"
     }
 
     override fun export(): Map<String, *> {
