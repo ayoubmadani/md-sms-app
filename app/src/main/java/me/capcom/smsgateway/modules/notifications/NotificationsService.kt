@@ -39,7 +39,7 @@ class NotificationsService(
 
     private val contentIntentFactories = mapOf(
         NOTIFICATION_ID_SMS_RECEIVED_WEBHOOK to { context: Context ->
-            MainActivity.starter(context, MainActivity.TAB_INDEX_SETTINGS)
+            MainActivity.starter(context)
         }
     )
 

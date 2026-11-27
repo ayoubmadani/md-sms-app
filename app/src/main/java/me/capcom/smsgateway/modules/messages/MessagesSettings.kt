@@ -55,6 +55,11 @@ class MessagesSettings(
     val simSelectionMode: SimSelectionMode
         get() = storage.get<SimSelectionMode>(SIM_SELECTION_MODE) ?: SimSelectionMode.OSDefault
 
+    /** MD SMS: SIM chosen on the home screen (1-based slot number), null = phone default. */
+    var preferredSimNumber: Int?
+        get() = storage.get<Int?>(PREFERRED_SIM_NUMBER)?.takeIf { it > 0 }
+        set(value) = storage.set(PREFERRED_SIM_NUMBER, value ?: 0)
+
     val logLifetimeDays: Int?
         get() = storage.get<Int?>(LOG_LIFETIME_DAYS)?.takeIf { it > 0 }
 
@@ -160,6 +165,7 @@ class MessagesSettings(
         private const val LIMIT_VALUE = "limit_value"
 
         private const val SIM_SELECTION_MODE = "sim_selection_mode"
+        private const val PREFERRED_SIM_NUMBER = "preferred_sim_number"
 
         private const val LOG_LIFETIME_DAYS = "log_lifetime_days"
 

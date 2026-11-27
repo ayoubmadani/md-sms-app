@@ -15,6 +15,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RadioButton
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
@@ -27,11 +28,13 @@ import kotlinx.coroutines.launch
 import me.capcom.smsgateway.R
 import me.capcom.smsgateway.databinding.FragmentHomeBinding
 import me.capcom.smsgateway.helpers.SettingsHelper
+import me.capcom.smsgateway.helpers.SubscriptionsHelper
 import me.capcom.smsgateway.modules.connection.ConnectionService
 import me.capcom.smsgateway.modules.events.EventBus
 import me.capcom.smsgateway.modules.gateway.GatewayService
 import me.capcom.smsgateway.modules.gateway.GatewaySettings
 import me.capcom.smsgateway.modules.gateway.events.DeviceRegisteredEvent
+import me.capcom.smsgateway.modules.messages.MessagesSettings
 import me.capcom.smsgateway.modules.orchestrator.OrchestratorService
 import me.capcom.smsgateway.ui.dialogs.FirstStartDialogFragment
 import org.koin.android.ext.android.inject
@@ -49,6 +52,7 @@ class HomeFragment : Fragment() {
 
     private val settingsHelper: SettingsHelper by inject()
     private val gatewaySettings: GatewaySettings by inject()
+    private val messagesSettings: MessagesSettings by inject()
     private val connectionService: ConnectionService by inject()
     private val events: EventBus by inject()
     private val gatewaySvc: GatewayService by inject()
@@ -163,6 +167,40 @@ class HomeFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         renderStatus()
+        renderSims()
+    }
+
+    /** SIM picker: phone default + every active SIM. The choice is used for all messages. */
+    private fun renderSims() {
+        val binding = _binding ?: return
+        val group = binding.groupSim
+        group.setOnCheckedChangeListener(null)
+        group.removeAllViews()
+
+        val sims = SubscriptionsHelper.getActiveSimCards(requireContext())
+        binding.textSimHint.isVisible = sims.isEmpty()
+
+        fun option(id: Int, label: String) = RadioButton(requireContext()).apply {
+            this.id = id
+            text = label
+        }.also { group.addView(it) }
+
+        option(SIM_AUTO_ID, getString(R.string.mdsms_sim_auto))
+        sims.sortedBy { it.simNumber }.forEach { sim ->
+            val name = listOfNotNull(sim.carrierName, sim.phoneNumber?.takeLast(4)?.let { "…$it" })
+                .joinToString(" ")
+                .ifEmpty { "—" }
+            option(sim.simNumber, getString(R.string.mdsms_sim_item, sim.simNumber, name))
+        }
+
+        val selected = messagesSettings.preferredSimNumber
+            ?.takeIf { n -> sims.any { it.simNumber == n } }
+            ?: SIM_AUTO_ID
+        group.check(selected)
+
+        group.setOnCheckedChangeListener { _, checkedId ->
+            messagesSettings.preferredSimNumber = checkedId.takeIf { it != SIM_AUTO_ID }
+        }
     }
 
     private fun renderStatus() {
@@ -242,6 +280,7 @@ class HomeFragment : Fragment() {
         }
 
         start()
+        renderSims()
     }
 
     /** Step 6 of the merchant setup: keep Android from killing the app in the background. */
@@ -268,6 +307,8 @@ class HomeFragment : Fragment() {
     }
 
     companion object {
+        private const val SIM_AUTO_ID = 1000
+
         @JvmStatic
         fun newInstance() = HomeFragment()
     }

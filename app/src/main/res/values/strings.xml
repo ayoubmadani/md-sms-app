@@ -236,4 +236,8 @@
     <string name="mdsms_keep_on">Keep this phone on, charged and connected to the internet.</string>
     <string name="mdsms_permissions_missing">SMS permission is required to send messages</string>
     <string name="mdsms_link_failed">Linking failed: %1$s</string>
+    <string name="mdsms_sim_title">SIM used for sending</string>
+    <string name="mdsms_sim_auto">Phone default</string>
+    <string name="mdsms_sim_item">SIM %1$d — %2$s</string>
+    <string name="mdsms_sim_need_permission">Start the service to see your SIM cards</string>
 </resources>

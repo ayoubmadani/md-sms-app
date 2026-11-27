@@ -406,6 +406,12 @@ class MessagesService(
             throw RuntimeException("No SIMs found")
         }
 
+        // MD SMS: the SIM picked on the home screen wins, if it is still in the phone
+        settings.preferredSimNumber?.let { preferred ->
+            val slot = preferred - 1
+            if (slot in simSlots) return slot
+        }
+
         return when (settings.simSelectionMode) {
             MessagesSettings.SimSelectionMode.OSDefault -> null
             MessagesSettings.SimSelectionMode.RoundRobin -> simSlots[(id % simSlots.size).toInt()]

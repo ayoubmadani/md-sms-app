@@ -28,4 +28,8 @@
     <string name="mdsms_keep_on">Gardez ce téléphone allumé, chargé et connecté à Internet.</string>
     <string name="mdsms_permissions_missing">L\'autorisation SMS est nécessaire pour envoyer des messages</string>
     <string name="mdsms_link_failed">Échec de l\'association : %1$s</string>
+    <string name="mdsms_sim_title">SIM utilisée pour l\'envoi</string>
+    <string name="mdsms_sim_auto">Par défaut du téléphone</string>
+    <string name="mdsms_sim_item">SIM %1$d — %2$s</string>
+    <string name="mdsms_sim_need_permission">Démarrez le service pour voir vos cartes SIM</string>
 </resources>
